@@ -23,14 +23,18 @@ struct ContentView: View {
 
     var body: some View {
         ZStack{
-            Color.blue
+            LinearGradient(gradient: Gradient(colors: [.blue,.black]), startPoint: .top, endPoint: .bottom).ignoresSafeArea()
             VStack(spacing:30){
-                Text("Tap the flag of \n \(countries[correctAnswer])").foregroundColor(.white).multilineTextAlignment(.center)
+                VStack {
+                    Text("Tap the flag of").foregroundColor(.white).font(.subheadline.weight(.heavy))
+                    Text(countries[correctAnswer]).foregroundColor(.white).font(.largeTitle.weight(.semibold))
+                }
+             
                 ForEach(0..<3){ num in
                     Button {
                        flagTapped(num)
                     } label :{
-                        Image(countries[num]).renderingMode(.original)
+                        Image(countries[num]).renderingMode(.original).clipShape(Capsule()).shadow(radius:5)
                     }
                     
                 }
@@ -39,7 +43,7 @@ struct ContentView: View {
         {
             Button("Continue",action: askQuestion)
         } message:{
-            Text(showingScore ? "Your score is UP" : "Your score is DOWN")
+            Text( scoreTitle == "Correct" ? "Your score is UP" : "Your score is DOWN")
         }
         .ignoresSafeArea()
     }
