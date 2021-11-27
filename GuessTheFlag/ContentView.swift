@@ -16,26 +16,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var showingAlert = false
     var body: some View {
         VStack{
-            Button("Button 1"){}.buttonStyle(.bordered)
-            Button("Button 2",role: .destructive){}.buttonStyle(.bordered)
-            Button("Button 3"){}.buttonStyle(.borderedProminent)
-            Button("Button 4",role: .destructive){}.buttonStyle(.borderedProminent)
-            
-            Button { //custom button
-                print("tapped")
-            }label : {
-                Text("Tap me!").padding().foregroundColor(.white).background(.red)
+            Button("Show Alert") {
+                showingAlert = true
             }
-            Button { //custom button
-                print("tapped")
-            }label : {
-                Label("Edit",systemImage: "pencil").font(.system(size: 59)) //resize the label with font
+            .alert("Important message", isPresented: $showingAlert) { // just can take two buttons for now 
+                Button("OK", role: .cancel) { }
+                Button("Cancel", role: .destructive) { }
+            } message: {
+                Text("Please read this.")
             }
-            Spacer().frame(height: 40)
-            Image(systemName: "pencil").resizable().renderingMode(.original).frame(width: 100, height: 100, alignment: .center)
-            
         }
     }
 }
